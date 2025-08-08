@@ -18,7 +18,8 @@ st.markdown("---")
 # --- Parâmetros ---
 # ID do modelo no Google Drive
 MODEL_ID = "1-D5IJg2-zvow5Jqvr4vb80KbmEr4R4o3"
-MODEL_FILENAME = "modelo_p_t_4_smt.pkl" # O Streamlit espera um arquivo .pkl, não uma pasta
+MODEL_FILENAME = "modelo_p_t_4_smt.pkl"
+cut_off = 0.22  # Valor de cut_off fixo
 
 # --- Função para baixar o modelo ---
 @st.cache_resource
@@ -42,13 +43,7 @@ st.subheader("1. Carregar Dados de Análise")
 uploaded_file = st.file_uploader("Carregue o arquivo XLSX com os dados de entrada", type=["xlsx"])
 
 st.subheader("2. Configurações da Análise")
-cut_off = st.slider(
-    "Defina o valor de corte (cut_off) para a predição:",
-    min_value=0.0,
-    max_value=1.0,
-    value=0.22,
-    step=0.01
-)
+st.write(f"O valor de corte (cut_off) está fixado em: **{cut_off}**")
 
 st.markdown("---")
 # Botão para iniciar a análise
