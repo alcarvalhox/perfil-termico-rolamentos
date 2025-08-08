@@ -14,7 +14,7 @@ st.set_page_config(
 
 st.title("Análise de Perfil Térmico de Rodas")
 st.markdown("---")
-https://drive.google.com/file/d/1-D5IJg2-zvow5Jqvr4vb80KbmEr4R4o3/view?usp=sharing
+
 # --- Parâmetros ---
 # ID do modelo no Google Drive
 MODEL_ID = "1-D5IJg2-zvow5Jqvr4vb80KbmEr4R4o3"
