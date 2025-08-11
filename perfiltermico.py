@@ -2,29 +2,31 @@ import streamlit as st
 import pandas as pd
 import numpy as np
 import pickle
-import requests
 from io import BytesIO
 
 st.set_page_config(page_title="Perfil Térmico de Rodas", layout="wide")
 st.title("🔍 Análise de Perfil Térmico de Rodas")
 st.write("✅ App iniciado com sucesso!")
 
-cut_off = 0.22
+cut_off = 0.27
 
+# A função de cache agora carrega o modelo do arquivo local
 @st.cache_data
-def load_model_from_drive(drive_url):
+def load_model():
     try:
-        file_id = drive_url.split('/')[-2]
-        download_url = f"https://drive.google.com/uc?export=download&id={file_id}"
-        response = requests.get(download_url)
-        response.raise_for_status()
-        model = pickle.load(BytesIO(response.content))
+        # Abre e desserializa o modelo a partir do arquivo local
+        with open("modelo_p_t_5_smt", "rb") as f:
+            model = pickle.load(f)
         return model
+    except FileNotFoundError:
+        st.error("❌ Erro: O arquivo do modelo 'modelo_p_t_5_smt' não foi encontrado.")
+        return None
     except Exception as e:
         st.error(f"❌ Erro ao carregar o modelo: {e}")
         return None
 
-modelo_url = 'https://drive.google.com/file/d/1-D5IJg2-zvow5Jqvr4vb80KbmEr4R4o3/view?usp=sharing'
+# Não precisamos mais da URL do Google Drive
+# modelo_url = 'https://drive.google.com/file/d/1-D5IJg2-zvow5Jqvr4vb80KbmEr4R4o3/view?usp=sharing'
 
 uploaded_file = st.file_uploader("📤 Faça upload do arquivo Excel para análise", type=["xlsx"])
 
@@ -34,7 +36,8 @@ if uploaded_file is not None:
         array = bd1.values
         X = array[:, 0:28]
 
-        model = load_model_from_drive(modelo_url)
+        # Carrega o modelo localmente
+        model = load_model()
         if model is None:
             st.stop()
 
@@ -74,3 +77,5 @@ if uploaded_file is not None:
         st.error(f"❌ Ocorreu um erro durante a análise: {e}")
 else:
     st.info("📁 Aguarde o upload do arquivo Excel para iniciar a análise.")
+
+   
