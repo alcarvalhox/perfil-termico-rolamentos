@@ -5,8 +5,8 @@ import pickle
 import plotly.express as px  # Importamos o Plotly Express
 from io import BytesIO
 
-st.set_page_config(page_title="Perfil Térmico de Rodas", layout="wide")
-st.title("🔍 Análise de Perfil Térmico de Rodas")
+st.set_page_config(page_title="Perfil Térmico de Rolamentos", layout="wide")
+st.title("🔍 Análise de Perfil Térmico de Rolamentos")
 st.write("✅ App iniciado com sucesso!")
 
 cut_off = 0.27
